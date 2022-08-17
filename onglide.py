@@ -1,4 +1,5 @@
 import argparse
+import shutil
 import time
 
 from PIL import Image
@@ -66,7 +67,8 @@ if __name__ == "__main__":
     get_class(args.class_name, "map.png", "results.png")
 
     image = resize_image("map.png", width=1366)
-    image.save("output.png")
+    image.save("tmp.png")
+    shutil.move("tmp.png", "output.png")
     print(f"{args.class_name} - Map")
 
     time.sleep(args.delay)
@@ -74,5 +76,6 @@ if __name__ == "__main__":
     image = resize_image("results.png", width=1366)
     bg = Image.new("RGBA", (1366, 768), (0, 0, 0))
     bg.paste(image, (0, (768 - image.height) // 2))
-    bg.save("output.png")
+    bg.save("tmp.png")
+    shutil.move("tmp.png", "output.png")
     print(f"{args.class_name} - Results")
