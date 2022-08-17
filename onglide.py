@@ -61,6 +61,9 @@ if __name__ == "__main__":
     print(f"{args.class_name} - Map")
 
     time.sleep(args.delay)
+
     image = resize_image("results.png", width=1366)
-    image.save("output.png")
+    bg = Image.new("RGBA", (1366, 768), (0, 0, 0))
+    bg.paste(image, (0, (768 - image.height) // 2))
+    bg.save("output.png")
     print(f"{args.class_name} - Results")
