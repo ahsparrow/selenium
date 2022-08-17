@@ -37,7 +37,7 @@ def get_class(class_name, map_filename, results_filename):
         map = driver.find_element(By.CLASS_NAME, "resizingMap")
 
         driver.execute_script("arguments[0].style.visibility='hidden'", map)
-        time.sleep(2)
+        time.sleep(5)
 
         results.screenshot(results_filename)
 
@@ -47,7 +47,7 @@ def get_class(class_name, map_filename, results_filename):
         driver.execute_script("arguments[0].style.visibility='hidden'", results)
         driver.execute_script("arguments[0].style.visibility='hidden'", sponsor)
         driver.execute_script("arguments[0].style.visibility='hidden'", overlays)
-        time.sleep(2)
+        time.sleep(5)
 
         map.screenshot(map_filename)
 
