@@ -22,6 +22,7 @@ def get_class(class_name, map_filename, results_filename):
     options.add_argument("--app=https://www.google.com")
     options.add_experimental_option("useAutomationExtension", False)
     options.add_experimental_option("excludeSwitches", ["enable-automation"])
+    options.add_argument("headless")
 
     with webdriver.Chrome(options=options) as driver:
         driver.implicitly_wait(10)
