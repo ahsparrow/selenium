@@ -5,7 +5,13 @@ from PIL import Image
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
+
+def send_keys(element, key_str):
+    for k in key_str:
+        element.send_keys(k)
+        time.sleep(0.5)
 
 def resize_image(image_filename, width=0, height=0):
     image = Image.open(image_filename)
@@ -29,16 +35,16 @@ def get_class(class_name, map_filename, results_filename):
         driver.set_window_size(1920, 1080)
 
         driver.get(f"https://wwgc.onglide.com/?className={class_name}")
+        time.sleep(5)
 
         navbar = driver.find_element(By.CLASS_NAME, "navbar")
         results = driver.find_element(By.CLASS_NAME, "resultsOverlay")
         sponsor = driver.find_element(By.CLASS_NAME, "sponsor")
         overlays = driver.find_element(By.CLASS_NAME, "overlays")
         map = driver.find_element(By.CLASS_NAME, "resizingMap")
+        map_wrapper = driver.find_element(By.ID, "deckgl-wrapper")
 
         driver.execute_script("arguments[0].style.visibility='hidden'", map)
-        time.sleep(5)
-
         results.screenshot(results_filename)
 
         driver.set_window_size(683, 384+24)
@@ -47,8 +53,8 @@ def get_class(class_name, map_filename, results_filename):
         driver.execute_script("arguments[0].style.visibility='hidden'", results)
         driver.execute_script("arguments[0].style.visibility='hidden'", sponsor)
         driver.execute_script("arguments[0].style.visibility='hidden'", overlays)
-        time.sleep(5)
 
+        send_keys(map_wrapper, "---" + Keys.ARROW_LEFT)
         map.screenshot(map_filename)
 
 if __name__ == "__main__":
