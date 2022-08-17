@@ -35,7 +35,7 @@ def get_class(class_name, map_filename, results_filename):
         driver.set_window_size(1920, 1080)
 
         driver.get(f"https://wwgc.onglide.com/?className={class_name}")
-        time.sleep(5)
+        time.sleep(10)
 
         navbar = driver.find_element(By.CLASS_NAME, "navbar")
         results = driver.find_element(By.CLASS_NAME, "resultsOverlay")
