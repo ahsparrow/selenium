@@ -55,7 +55,7 @@ def get_class(class_name, map_filename, results_filename):
         driver.execute_script("arguments[0].style.visibility='hidden'", sponsor)
         driver.execute_script("arguments[0].style.visibility='hidden'", overlays)
 
-        send_keys(map_wrapper, "---" + Keys.ARROW_LEFT)
+        send_keys(map_wrapper, "----" + Keys.ARROW_DOWN)
         map.screenshot(map_filename)
 
 if __name__ == "__main__":
