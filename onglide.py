@@ -5,10 +5,10 @@ import time
 from PIL import Image
 
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
-
 def send_keys(element, key_str):
     for k in key_str:
         element.send_keys(k)
@@ -44,6 +44,11 @@ def get_class(class_name, map_filename, results_filename):
         overlays = driver.find_element(By.CLASS_NAME, "overlays")
         map = driver.find_element(By.CLASS_NAME, "resizingMap")
         map_wrapper = driver.find_element(By.ID, "deckgl-wrapper")
+        try:
+            units_button = driver.find_element(By.XPATH, '//button[@title="Switch to imperial units"]')
+            units_button.click()
+        except NoSuchElementException:
+            pass
 
         driver.execute_script("arguments[0].style.visibility='hidden'", map)
         results.screenshot(results_filename)
