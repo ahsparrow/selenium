@@ -44,6 +44,8 @@ def get_class(class_name, map_filename, results_filename):
         overlays = driver.find_element(By.CLASS_NAME, "overlays")
         map = driver.find_element(By.CLASS_NAME, "resizingMap")
         map_wrapper = driver.find_element(By.ID, "deckgl-wrapper")
+
+        # Get the results
         try:
             units_button = driver.find_element(By.XPATH, '//button[@title="Switch to imperial units"]')
             units_button.click()
@@ -53,14 +55,24 @@ def get_class(class_name, map_filename, results_filename):
         driver.execute_script("arguments[0].style.visibility='hidden'", map)
         results.screenshot(results_filename)
 
+        # Get the map
         driver.set_window_size(683, 384+24)
+
+        try:
+            zoom_button = driver.find_element(By.XPATH, '//button[@title="Zoom to task"]')
+
+            # Button will be off screen - so trigger script directly
+            driver.execute_script("arguments[0].click();", zoom_button);
+            time.sleep(2)
+        except NoSuchElementException:
+            pass
+
         driver.execute_script("arguments[0].style.visibility='visible'", map)
         driver.execute_script("arguments[0].style.visibility='hidden'", navbar)
         driver.execute_script("arguments[0].style.visibility='hidden'", results)
         driver.execute_script("arguments[0].style.visibility='hidden'", sponsor)
         driver.execute_script("arguments[0].style.visibility='hidden'", overlays)
 
-        send_keys(map_wrapper, "----" + Keys.ARROW_DOWN)
         map.screenshot(map_filename)
 
 if __name__ == "__main__":
