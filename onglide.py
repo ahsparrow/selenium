@@ -2,7 +2,7 @@ import argparse
 import shutil
 import time
 
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
@@ -83,13 +83,20 @@ if __name__ == "__main__":
 
     get_class(args.class_name, "map.png", "results.png")
 
+    # Map
     image = resize_image("map.png", width=1366)
+
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype("Gidole-Regular.ttf", size=80)
+    draw.text((10, 10), args.class_name.title(), font=font, fill=(0, 0, 255))
+
     image.save("tmp.png")
     shutil.move("tmp.png", "output.png")
     print(f"{args.class_name} - Map")
 
     time.sleep(args.delay)
 
+    # Results
     image = resize_image("results.png", width=1366)
     bg = Image.new("RGBA", (1366, 768), (0, 0, 0))
     bg.paste(image, (0, (768 - image.height) // 2))
